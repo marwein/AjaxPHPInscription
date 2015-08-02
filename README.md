@@ -1,2 +1,2 @@
 # AjaxPHPInscription
-An inscription form using bootstrap, formvalidation in PHP using Ajax submit
+An inscription form using PHP using Ajax submit
