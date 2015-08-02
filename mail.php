@@ -7,13 +7,11 @@ if ($_POST) {
 	$nb = $connexion->query("SELECT COUNT(*) FROM inscription WHERE email = '{$_POST['email']}';")->fetchColumn();
 	//$estDisponible prendra faux si le resultat de la requete contient une ligne ou plus, sinon il restera a vrai
 	$estDisponible = (($nb > 0)?false:true);
-	echo json_encode(
-		array(
-			'valid' => $estDisponible,
+	echo json_encode(array('valid' => $estDisponible,
 		));
 	exit;
 }
 else {
-	header('Location: ./valid.html');
+	header('Location: valid.html');
 }
 ?>

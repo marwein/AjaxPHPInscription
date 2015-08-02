@@ -11,12 +11,8 @@
         <link  rel="stylesheet" href="./css/bootstrap.min.css">
         <!-- FONT AWSOME -->
         <link rel="stylesheet" href="./css/font-awesome.min.css" media="all" />
-        <!-- FormValidation -->
-		<link rel="stylesheet" href="./css/formValidation.css" media="all" />
-		<!-- Datepicker -->
-        <link rel="stylesheet" href="./css/bootstrap-datepicker3.min.css" media="all" />
-		<!-- Select2 -->
-		<link rel="stylesheet" href="./css/select2.min.css" media="all" />
+        <!-- Datagrid -->
+		<link rel="stylesheet" href="./css/jquery.bootgrid.min.css" media="all" />
         
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 10]>
@@ -29,13 +25,14 @@
 
         <!-- un style pour centrer les bloc et rendre le code plus simple et visible -->
         <style type="text/css">
+			.container-fluid {
+				margin-top: 50px;
+				min-width: 400px;
+			}
+			
             .center {
                 text-align: center;
             }
-			
-			#result {
-				margin-top: 80px;
-			}
 			
 			td {
 				text-align: center;
@@ -71,43 +68,33 @@
                 <!--/.nav-collapse -->
             </div>
         </div>
-        <div class="container" id="result">
-            	<h1 class="col-xs-12 col-md-4 col-md-offset-4 center">Inscription list</h1>
-                <div class="col-xs-12 col-md-10 col-md-offset-1">
-                    <div class="table-responsive">
-                        <table class="table table-condensed table-striped table-bordered table-hover no-margin">
-                            <thead>
-                                <tr>
-                                    <th class="col-xs-2 center">Name</th>
-                                    <th class="col-xs-1 center">Pseudo</th>
-                                    <th class="col-xs-2 center">Mail</th>
-                                    <th class="col-xs-1 center">Phone</th>
-                                    <th class="col-xs-1 center">Category</th>
-                                    <th class="col-xs-1 center">Birthday</th>
-                                    <th class="col-xs-1 center">Inscription</th>
-                                    <th class="col-xs-1 center">Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>B. Marwein</td>
-                                    <td>Marwein</td>
-                                    <td>contact@marwe.in</td>
-                                    <td>22680226</td>
-                                    <td>Administrator</td>
-                                    <td>28/11/1985</td>
-                                    <td>01/08/2015</td>
-                                    <td>
-                                        <span class="label label label-success">Actif</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+        <div class="container-fluid" id="result">
+			<h1 class="col-xs-12 col-md-4 col-md-offset-4 center">Inscription list</h1>
+			<div class="col-xs-12 col-md-12">
+				<div class="row table-responsive">
+					<table id="grid-data" class="table table-condensed table-hover table-striped"
+data-toggle="bootgrid" data-ajax="true" data-url="list.php">
+						<thead>
+							<tr>
+								<th class="col-xs-1 center" data-column-id="id" data-type="numeric" data-identifier="true">ID</th>
+								<th class="col-xs-1 center" data-column-id="firstname">First Name</th>
+								<th class="col-xs-1 center" data-column-id="lastname">Last Name</th>
+								<th class="col-xs-1 center" data-column-id="pseudo">Pseudo</th>
+								<th class="col-xs-2 center" data-column-id="email">Mail</th>
+								<th class="col-xs-2 center" data-column-id="phone" data-type="numeric">Phone</th>
+								<th class="col-xs-1 center" data-column-id="skype">Skype</th>
+								<th class="col-xs-1 center" data-column-id="category">Category</th>
+								<th class="col-xs-1 center" data-column-id="birthday">Birthday</th>
+								<th class="col-xs-1 center" data-column-id="inscription">Inscription</th>
+								<th class="col-xs-1 center" data-column-id="actif" data-formatter="actif">Status</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
         </div>
 
-        <div id="footer">
+		<div id="footer">
             <div class="container center">
                 <p>Copyright &copy; 2015 - FTW Group Corporate</p>
             </div>
@@ -115,18 +102,16 @@
 
         <script type="text/javascript" src="./js/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="./js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="./js/formValidation.min.js"></script>
-        <script type="text/javascript" src="./js/validation.min.js"></script>
-        <script type="text/javascript" src="./js/bootstrap-datepicker.min.js"></script>
-		<script type="text/javascript" src="./js/select2.full.min.js"></script>
+        <script type="text/javascript" src="./js/jquery.bootgrid.min.js"></script>
+        
 		<script type="text/javascript">
-			$(document).ready(function () {
-				//Rafraichir la liste toutes les secondes
-				var $container = $("tbody");
-				$container.load("list.php");
-				var refresh = setInterval(function() {
-					$container.load('list.php');
-				}, 1000);
+			$("#grid-data").bootgrid({
+			   formatters: {
+					"actif": function(column, row)
+					{
+						return "<a href=\"#\">" + column.id + ": " + row.id + "</a>";
+					}
+				}	    
 			});
 		</script>
 
