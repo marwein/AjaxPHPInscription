@@ -38,7 +38,7 @@ $(document).ready(function () {
 		$('#userForm').formValidation('revalidateField', 'birthDay');
 	});
 	
-	$("#phone").intlTelInput({
+	$("#phoneform").intlTelInput({
 		utilsScript: "http://jackocnr.com/lib/intl-tel-input/lib/libphonenumber/build/utils.js?2",
 		autoPlaceholder: true,
 		preferredCountries: [ "tn", "dz", "ma", "it", "fr", "us", "gb" ],
@@ -162,7 +162,7 @@ $(document).ready(function () {
                     }
                 }
             },
-			phone: {
+			phoneform: {
                 validators: {
                     callback: {
 						message: 'Invalid Number',
@@ -221,7 +221,8 @@ $(document).ready(function () {
     .on('success.form.fv', function(e) {
         // Prevent form submission
         e.preventDefault();
-
+		var phoneNumber = $("#phoneform").intlTelInput("getExtension") + $("#phoneform").intlTelInput("getNumber");
+		$("#phone").val(phoneNumber);
         var $form = $(e.target),
             fv    = $form.data('formValidation');
         var submit = $('#envoyer');  // submit button
