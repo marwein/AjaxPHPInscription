@@ -76,17 +76,18 @@
 data-toggle="bootgrid" data-ajax="true" data-url="list.php">
 						<thead>
 							<tr>
-								<th class="col-xs-1 center" data-column-id="id" data-type="numeric" data-identifier="true">ID</th>
-								<th class="col-xs-1 center" data-column-id="firstname">First Name</th>
-								<th class="col-xs-1 center" data-column-id="lastname">Last Name</th>
-								<th class="col-xs-1 center" data-column-id="pseudo">Pseudo</th>
-								<th class="col-xs-2 center" data-column-id="email">Mail</th>
-								<th class="col-xs-2 center" data-column-id="phone" data-type="numeric">Phone</th>
-								<th class="col-xs-1 center" data-column-id="skype">Skype</th>
-								<th class="col-xs-1 center" data-column-id="category">Category</th>
-								<th class="col-xs-1 center" data-column-id="birthday">Birthday</th>
-								<th class="col-xs-1 center" data-column-id="inscription">Inscription</th>
-								<th class="col-xs-1 center" data-column-id="actif" data-formatter="actif">Status</th>
+								<th data-column-id="id" data-type="numeric" data-identifier="true">ID</th>
+								<th data-column-id="firstname">First Name</th>
+								<th data-column-id="lastname">Last Name</th>
+								<th data-column-id="pseudo">Pseudo</th>
+								<th data-column-id="email">Mail</th>
+								<th data-column-id="phone" data-type="numeric">Phone</th>
+								<th data-column-id="skype">Skype</th>
+								<th data-column-id="category">Category</th>
+								<th data-column-id="birthday">Birthday</th>
+								<th data-column-id="inscription">Inscription</th>
+								<th data-column-id="actif" data-formatter="actif">Status</th>
+								<th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
 							</tr>
 						</thead>
 					</table>
@@ -105,13 +106,27 @@ data-toggle="bootgrid" data-ajax="true" data-url="list.php">
         <script type="text/javascript" src="./js/jquery.bootgrid.min.js"></script>
         
 		<script type="text/javascript">
-			$("#grid-data").bootgrid({
-			   formatters: {
-					"actif": function(column, row)
+			var grid = $("#grid-data").bootgrid({
+				formatters: {
+					"commands": function(column, row)
 					{
-						return "<a href=\"#\">" + column.id + ": " + row.id + "</a>";
+						return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span></button> " + 
+							"<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
 					}
-				}	    
+				}
+			});
+
+			$("#grid-data").on("loaded.rs.jquery.bootgrid", function()
+			{
+				grid.find(".command-edit").on("click", function(e)
+				{
+					alert("You pressed edit on row: " + $(this).data("row-id"));
+				}).end().find(".command-delete").on("click", function(e)
+				{
+					var rows = Array();
+					rows[0] = $(this).data("row-id");
+					$("#grid-data").bootgrid('remove', rows);
+				});
 			});
 		</script>
 

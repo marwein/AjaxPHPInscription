@@ -21,6 +21,7 @@ $(document).ready(function () {
 		return (today);	
 	};
 	
+	
 	$('#category').select2();
 	$('#captchaOperation').html([randomNumber(1, randomNumber(10, 30)), '+', randomNumber(1, randomNumber(10, 30))].join(' '));
 	
@@ -36,6 +37,13 @@ $(document).ready(function () {
 		// Revalidate the date field
 		$('#userForm').formValidation('revalidateField', 'birthDay');
 	});
+	
+	$("#phone").intlTelInput({
+		utilsScript: "http://jackocnr.com/lib/intl-tel-input/lib/libphonenumber/build/utils.js?2",
+		autoPlaceholder: true,
+		preferredCountries: [ "tn", "dz", "ma", "it", "fr", "us", "gb" ],
+	});
+	
 	//FormValidation
     $('#userForm')
 	.find('[name="colors"]')
@@ -156,18 +164,13 @@ $(document).ready(function () {
             },
 			phone: {
                 validators: {
-                    notEmpty: {
-                        message: 'Required'
-                    },
-                    stringLength: {
-                        min: 8,
-                        max: 8,
-                        message: '8 numbers'
-                    },
-                    regexp: {
-                        regexp: /^((7[1-8]{1})|(9[2-8]{1})|(2[0-5]{1}))[0-9]{6}$/,
-                        message: 'Invalid phone number'
-                    }
+                    callback: {
+						message: 'Invalid Number',
+						callback: function(value, validator, $field) {
+							var isValid = $field.intlTelInput("isValidNumber");
+							return (isValid);
+						}
+					}
                 }
             },
 			skype: {
