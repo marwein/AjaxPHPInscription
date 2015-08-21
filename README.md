@@ -1,2 +1,2 @@
 # AjaxPHPInscription
-An inscription form using PHP using Ajax submit
+An signin/signup form using HTML5, CSS3, jQuery, Ajax & PHP
